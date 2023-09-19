@@ -32,7 +32,7 @@ function ProductCard(props: ProductCardProp) {
         <a href="#">
             <div className="rounded shadow-sm bg-gray-50">
                 <div className="relative">
-                    <img className="object-cover rounded-t h-44" src={product.thumbnail} alt={product.title} />
+                    <img className="object-cover min-w-full rounded-t aspect-[4/3]" src={product.thumbnail} alt={product.title} />
                     <div className="absolute p-1 text-xs text-gray-200 bg-purple-400 rounded top-2 right-2">
                         <span>{product.rating}</span>
                     </div>
@@ -75,7 +75,7 @@ function ProductsList() {
     }
 
     return (
-        <div className="grid grid-cols-2 gap-4 mx-2 mt-4">
+        <div className="grid grid-cols-2 gap-4 mx-2 my-4 md:grid-cols-4 xl:grid-cols-6">
             {
                 data && data.products.map((product: ProductType) => <ProductCard key={product.id} product={product} />)
             }
