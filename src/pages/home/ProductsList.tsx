@@ -77,7 +77,7 @@ function ProductsList() {
         </div>
     ) : (
         <div className="flex-1">
-            <div className="grid grid-cols-2 gap-4 mx-2 my-4 md:grid-cols-4 xl:grid-cols-6">
+            <div className="grid grid-cols-2 gap-4 mx-2 my-4 md:grid-cols-4 2xl:grid-cols-6">
                 {
                     data && data.pages.map((group, index) => (
                         <React.Fragment key={index}>

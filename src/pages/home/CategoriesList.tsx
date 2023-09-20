@@ -14,7 +14,7 @@ export default function CategoriesList() {
     ) : isLoading ? <Loader /> : (
         <>
             <h5 className="mx-2 font-semibold text-md">Categories</h5>
-            <ul className="flex justify-start gap-1 py-2 mt-1 overflow-x-scroll md:overflow-x-auto md:flex-col md:mx-2">
+            <ul className="flex justify-start gap-1 py-2 mt-1 overflow-x-scroll md:w-44 md:overflow-x-auto md:flex-col md:mx-2">
                 {
                     data && data.map((category: string) => {
                         return (
