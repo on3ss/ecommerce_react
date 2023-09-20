@@ -1,5 +1,5 @@
 import { Outlet, Link, useNavigate } from "react-router-dom";
-import CategoriesList from "../pages/home/CategoriesList";
+import CategoriesList from "../pages/components/CategoriesList";
 import React, { useState } from "react";
 
 function SearchForm() {

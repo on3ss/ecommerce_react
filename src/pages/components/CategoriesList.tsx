@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import Loader from "../components/Loader"
+import Loader from "./Loader"
 import { Link, useParams } from "react-router-dom"
 
 export default function CategoriesList() {
