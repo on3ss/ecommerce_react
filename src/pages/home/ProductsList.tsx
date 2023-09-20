@@ -69,31 +69,37 @@ function ProductsList({ data, fetchNextPage, hasNextPage, isFetching, isFetching
             <p className="text-sm text-center">Something went wrong! Could not fetch products. Please try again later.</p>
         </div>
     ) : (
-        <div className="flex-1">
-            <div className="grid grid-cols-2 gap-4 mx-2 my-4 md:grid-cols-4 2xl:grid-cols-6">
-                {
-                    data && data.pages.map((group, index) => (
-                        <React.Fragment key={index}>
-                            {
-                                group.products.map((product: ProductType) => <ProductCard key={product.id} product={product} />)
-                            }
-                        </React.Fragment>
-                    ))
-                }
-            </div>
-            <div>
-                <button className="min-w-full py-4 my-4 text-center" onClick={() => fetchNextPage()} disabled={!hasNextPage || isFetchingNextPage}>
+        data && data.pages.length > 0 ? (
+            <div className="flex-1">
+                <div className="grid grid-cols-2 gap-4 mx-2 my-4 md:grid-cols-4 2xl:grid-cols-6">
                     {
-                        isFetchingNextPage
-                            ? 'Loading more...'
-                            : hasNextPage
-                                ? 'Load More'
-                                : 'Nothing more to load'
+                        data && data.pages.map((group, index) => (
+                            <React.Fragment key={index}>
+                                {
+                                    group.products.map((product: ProductType) => <ProductCard key={product.id} product={product} />)
+                                }
+                            </React.Fragment>
+                        ))
                     }
-                </button>
+                </div>
+                <div>
+                    <button className="min-w-full py-4 my-4 text-center" onClick={() => fetchNextPage()} disabled={!hasNextPage || isFetchingNextPage}>
+                        {
+                            isFetchingNextPage
+                                ? 'Loading more...'
+                                : hasNextPage
+                                    ? 'Load More'
+                                    : 'Nothing more to load'
+                        }
+                    </button>
+                </div>
+                <div className="min-w-full text-sm text-center">{isFetching && !isFetchingNextPage ? 'Fetching...' : null}</div>
             </div>
-            <div className="min-w-full text-sm text-center">{isFetching && !isFetchingNextPage ? 'Fetching...' : null}</div>
-        </div>
+        ) : (
+            <div className="mx-2 mt-4">
+                <p className="text-sm text-center">No products Found!</p>
+            </div>
+        )
     )
 }
 
