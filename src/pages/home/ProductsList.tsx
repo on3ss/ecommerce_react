@@ -76,7 +76,7 @@ function ProductsList() {
             <p className="text-sm text-center">Something went wrong! Could not fetch products. Please try again later.</p>
         </div>
     ) : (
-        <>
+        <div className="flex-1">
             <div className="grid grid-cols-2 gap-4 mx-2 my-4 md:grid-cols-4 xl:grid-cols-6">
                 {
                     data && data.pages.map((group, index) => (
@@ -100,7 +100,7 @@ function ProductsList() {
                 </button>
             </div>
             <div className="min-w-full text-sm text-center">{isFetching && !isFetchingNextPage ? 'Fetching...' : null}</div>
-        </>
+        </div>
     )
 }
 
