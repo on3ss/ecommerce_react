@@ -8,7 +8,7 @@ const calculateDiscountedPrice = (price: number, percentage: number) => (price -
 
 const ProductCard = memo(({ product }: { product: Product }) => {
     return (
-        <Link to={`product/${product.id}`}>
+        <Link to={`/product/${product.id}`}>
             <div className="min-h-full rounded shadow-sm bg-gray-50">
                 <div className="relative">
                     <img className="object-cover min-w-full rounded-t aspect-[4/3]" src={product.thumbnail} alt={product.title} loading="lazy" />
