@@ -12,7 +12,7 @@ export default function ProductsByCategory() {
         return await response.json()
     }
 
-    const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } = useInfiniteQuery<ProductResponse>([category], fetchProducts, {
+    const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } = useInfiniteQuery<ProductResponse>([`products-${category}`], fetchProducts, {
         getNextPageParam: (lastPage) => {
             const nextSkip = lastPage.skip + LIMIT
             return nextSkip > lastPage.total ? undefined : nextSkip
