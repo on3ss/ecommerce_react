@@ -3,6 +3,7 @@ import HomePage from "../pages/home/HomePage";
 import ErrorPage from "./router_error";
 import Root from "./root";
 import ProductsByCategory from "../pages/products_by_category";
+import ProductsBySearch from "../pages/products_by_search";
 
 const router = createBrowserRouter([
     {
@@ -17,7 +18,11 @@ const router = createBrowserRouter([
             {
                 path: 'category/:category',
                 element: <ProductsByCategory />
-            }
+            },
+            {
+                path: 'search/:query',
+                element: <ProductsBySearch />
+            },
         ]
     }
 ])
