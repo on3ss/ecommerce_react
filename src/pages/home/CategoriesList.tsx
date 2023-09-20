@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import Loader from "../components/Loader"
+import { Link } from "react-router-dom"
 
 export default function CategoriesList() {
     const fetchCategories = async (): Promise<string[]> => {
@@ -19,9 +20,9 @@ export default function CategoriesList() {
                     data && data.map((category: string) => {
                         return (
                             <li key={category} className="first:ml-2 last:mr-2 md:first:ml-0 md:last:mr-0">
-                                <button className="p-2 text-sm bg-purple-200 rounded md:bg-transparent whitespace-nowrap hover:bg-purple-400">
+                                <Link to={`category/${category}`} className="p-2 text-sm bg-purple-200 rounded md:bg-transparent whitespace-nowrap hover:bg-purple-400">
                                     {category}
-                                </button>
+                                </Link>
                             </li>
                         )
                     })

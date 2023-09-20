@@ -1,11 +1,12 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
+import CategoriesList from "../pages/home/CategoriesList";
 
 export default function Root() {
     return (
         <div className="flex flex-col min-h-screen">
             <header className="sticky top-0 z-10 flex items-center justify-between px-2 py-4 bg-white border-b">
                 <div>
-                    <h1 className="text-2xl font-bold text-purple-600">EStore</h1>
+                    <Link to="/"><h1 className="text-2xl font-bold text-purple-600">EStore</h1></Link>
                 </div>
                 <div className="flex items-center justify-end">
                     <button className="p-2 rounded hover:bg-purple-200">
@@ -25,7 +26,12 @@ export default function Root() {
                 </div>
             </header>
             <main className="flex flex-col flex-1">
-                <Outlet />
+                <div className="md:flex">
+                    <div className="mt-4">
+                        <CategoriesList />
+                    </div>
+                    <Outlet />
+                </div>
             </main>
         </div>
     )

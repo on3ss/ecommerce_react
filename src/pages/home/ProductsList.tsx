@@ -1,8 +1,8 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { InfiniteData } from "@tanstack/react-query";
 import Loader from "../components/Loader";
 import React, { memo } from "react";
 
-type ProductType = {
+export type ProductType = {
     id: number;
     title: string;
     description: string;
@@ -16,7 +16,7 @@ type ProductType = {
     images: string[];
 }
 
-type ProductResponse = {
+export type ProductResponse = {
     products: ProductType[];
     total: number;
     skip: number;
@@ -51,21 +51,14 @@ const ProductCard = memo(({ product }: { product: ProductType }) => {
     )
 })
 
-function ProductsList() {
-
-    const LIMIT = 30
-
-    const fetchProducts = async ({ pageParam = 0 }) => {
-        const response = await fetch(`https://dummyjson.com/products?limit=${LIMIT}&skip=${pageParam}`);
-        return await response.json()
-    }
-
-    const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } = useInfiniteQuery<ProductResponse>(['products'], fetchProducts, {
-        getNextPageParam: (lastPage) => {
-            const nextSkip = lastPage.skip + LIMIT
-            return nextSkip > lastPage.total ? undefined : nextSkip
-        }
-    })
+function ProductsList({ data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status }: {
+    data: InfiniteData<ProductResponse> | undefined,
+    fetchNextPage: Function,
+    hasNextPage: boolean | undefined,
+    isFetching: boolean | undefined,
+    isFetchingNextPage: boolean | undefined,
+    status: string
+}) {
 
     return status === 'loading' ? (
         <div className="flex items-center justify-center flex-1 min-h-full">
