@@ -1,5 +1,5 @@
 import { InfiniteData } from "@tanstack/react-query";
-import Loader from "../components/Loader";
+import Loader from "./Loader";
 import React, { memo } from "react";
 
 export type ProductType = {

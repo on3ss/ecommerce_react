@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import ProductsList, { ProductResponse } from "./home/ProductsList";
+import ProductsList, { ProductResponse } from "./components/ProductsList";
 import { useParams } from "react-router-dom"
 
 export default function ProductsBySearch() {

@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import ProductsList, { ProductResponse } from "./ProductsList";
+import ProductsList, { ProductResponse } from "../components/ProductsList";
 
 export default function HomePage() {
     const LIMIT = 30
