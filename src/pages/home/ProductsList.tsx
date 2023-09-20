@@ -23,6 +23,8 @@ type ProductResponse = {
     limit: number;
 }
 
+const calculateDiscountedPrice = (price: number, percentage: number) => (price - (price * (percentage / 100))).toFixed(2)
+
 const ProductCard = memo(({ product }: { product: ProductType }) => {
     return (
         <a href="#">
@@ -39,7 +41,7 @@ const ProductCard = memo(({ product }: { product: ProductType }) => {
                     <h5 className="font-semibold line-clamp-1 text-ellipsis">{product.title}</h5>
                     <p className="text-sm line-clamp-2">{product.description}</p>
                     <div className="flex items-center justify-start gap-2 my-2">
-                        <span className="font-semibold text-purple-400">${product.price}</span>
+                        <span className="font-semibold text-purple-400">${calculateDiscountedPrice(product.price, product.discountPercentage)}</span>
                         <span className="text-sm text-gray-600 line-through">${product.price}</span>
                         <span className="text-sm text-green-600">{product.discountPercentage}% off</span>
                     </div>
