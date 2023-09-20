@@ -12,7 +12,7 @@ export default function CategoriesList() {
     return error ? (
         <p>Something went wrong! Could not fetch categories</p>
     ) : isLoading ? <Loader /> : (
-        <div className="mt-4">
+        <>
             <h5 className="mx-2 font-semibold text-md">Categories</h5>
             <ul className="flex justify-start gap-1 py-2 mt-1 overflow-x-scroll">
                 {
@@ -27,7 +27,7 @@ export default function CategoriesList() {
                     })
                 }
             </ul>
-        </div>
+        </>
     )
 
 

@@ -4,7 +4,7 @@ import ProductsList from "./ProductsList";
 export default function Home() {
 
     return (
-        <div className="min-h-screen">
+        <div className="flex flex-col min-h-screen">
             <header className="flex items-center justify-between px-2 py-4 border-b">
                 <div>
                     <h1 className="text-2xl font-bold text-purple-600">EStore</h1>
@@ -26,8 +26,10 @@ export default function Home() {
                     </button>
                 </div>
             </header>
-            <main className="flex-1">
-                <CategoriesList />
+            <main className="flex flex-col flex-1">
+                <div className="mt-4">
+                    <CategoriesList />
+                </div>
                 <ProductsList />
             </main>
         </div>

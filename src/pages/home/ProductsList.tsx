@@ -65,7 +65,11 @@ function ProductsList() {
         }
     })
 
-    return status === 'loading' ? (<Loader />) : status === 'error' ? (
+    return status === 'loading' ? (
+        <div className="flex items-center justify-center flex-1 min-h-full">
+            <Loader />
+        </div>
+    ) : status === 'error' ? (
         <div className="mx-2 mt-4">
             <p className="text-sm text-center">Something went wrong! Could not fetch products. Please try again later.</p>
         </div>
