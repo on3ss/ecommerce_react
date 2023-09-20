@@ -5,6 +5,8 @@ import { Carousel } from "react-responsive-carousel"
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Product } from "../types/ProductType"
 
+const calculateDiscountedPrice = (price: number, percentage: number) => (price - (price * (percentage / 100))).toFixed(2)
+
 export default function ProductDetail() {
     const { id } = useParams()
 
@@ -38,8 +40,14 @@ export default function ProductDetail() {
                             }
                         </Carousel>
                         <div className="flex-1 mx-4">
-                            <h5 className="text-2xl font-bold">{data.title}</h5>
-                            <h6 className="text-gray-500">{data.description}</h6>
+                            <h6 className="text-xs text-gray-600 text-ellipsis">{data.brand}</h6>
+                            <h5 className="text-2xl font-bold line-clamp-1 text-ellipsis">{data.title}</h5>
+                            <p className="text-sm text-gray-600">{data.description}</p>
+                            <div className="flex items-center justify-start gap-2 my-2">
+                                <span className="font-semibold text-purple-400">${calculateDiscountedPrice(data.price, data.discountPercentage)}</span>
+                                <span className="text-sm text-gray-600 line-through">${data.price}</span>
+                                <span className="text-sm text-green-600">{data.discountPercentage}% off</span>
+                            </div>
                         </div>
                     </div>
                 )
