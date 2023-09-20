@@ -1,6 +1,6 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import Loader from "../components/Loader";
-import React from "react";
+import React, { memo } from "react";
 
 type ProductType = {
     id: number;
@@ -16,10 +16,6 @@ type ProductType = {
     images: string[];
 }
 
-type ProductCardProp = {
-    product: ProductType
-}
-
 type ProductResponse = {
     products: ProductType[];
     total: number;
@@ -27,12 +23,12 @@ type ProductResponse = {
     limit: number;
 }
 
-function ProductCard({ product }: { product: ProductType }) {
+const ProductCard = memo(({ product }: { product: ProductType }) => {
     return (
         <a href="#">
             <div className="rounded shadow-sm bg-gray-50">
                 <div className="relative">
-                    <img className="object-cover min-w-full rounded-t aspect-[4/3]" src={product.thumbnail} alt={product.title} />
+                    <img className="object-cover min-w-full rounded-t aspect-[4/3]" src={product.thumbnail} alt={product.title} loading="lazy" />
                     <div className="absolute p-1 text-xs text-gray-200 bg-purple-400 rounded top-2 right-2">
                         <span>{product.rating}</span>
                     </div>
@@ -51,7 +47,7 @@ function ProductCard({ product }: { product: ProductType }) {
             </div>
         </a>
     )
-}
+})
 
 function ProductsList() {
 
@@ -62,7 +58,7 @@ function ProductsList() {
         return await response.json()
     }
 
-    const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } = useInfiniteQuery(['products'], fetchProducts, {
+    const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } = useInfiniteQuery<ProductResponse>(['products'], fetchProducts, {
         getNextPageParam: (lastPage) => {
             const nextSkip = lastPage.skip + LIMIT
             return nextSkip > lastPage.total ? undefined : nextSkip
@@ -71,7 +67,7 @@ function ProductsList() {
 
     return status === 'loading' ? (<Loader />) : status === 'error' ? (
         <div className="mx-2 mt-4">
-            <p className="text-sm text-center">Something went wrong! Could not fetch products</p>
+            <p className="text-sm text-center">Something went wrong! Could not fetch products. Please try again later.</p>
         </div>
     ) : (
         <>
