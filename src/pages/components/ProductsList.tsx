@@ -1,33 +1,14 @@
 import { InfiniteData } from "@tanstack/react-query";
 import Loader from "./Loader";
 import React, { memo } from "react";
-
-export type ProductType = {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    discountPercentage: number;
-    rating: number;
-    stock: number;
-    brand: string;
-    category: string;
-    thumbnail: string;
-    images: string[];
-}
-
-export type ProductResponse = {
-    products: ProductType[];
-    total: number;
-    skip: number;
-    limit: number;
-}
+import { Products, Product } from "../../types/ProductType";
+import { Link } from "react-router-dom"
 
 const calculateDiscountedPrice = (price: number, percentage: number) => (price - (price * (percentage / 100))).toFixed(2)
 
-const ProductCard = memo(({ product }: { product: ProductType }) => {
+const ProductCard = memo(({ product }: { product: Product }) => {
     return (
-        <a href="#" className="">
+        <Link to={`product/${product.id}`}>
             <div className="min-h-full rounded shadow-sm bg-gray-50">
                 <div className="relative">
                     <img className="object-cover min-w-full rounded-t aspect-[4/3]" src={product.thumbnail} alt={product.title} loading="lazy" />
@@ -47,12 +28,12 @@ const ProductCard = memo(({ product }: { product: ProductType }) => {
                     </div>
                 </div>
             </div>
-        </a>
+        </Link>
     )
 })
 
 function ProductsList({ data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status }: {
-    data: InfiniteData<ProductResponse> | undefined,
+    data: InfiniteData<Products> | undefined,
     fetchNextPage: Function,
     hasNextPage: boolean | undefined,
     isFetching: boolean | undefined,
@@ -76,7 +57,7 @@ function ProductsList({ data, fetchNextPage, hasNextPage, isFetching, isFetching
                         data && data.pages.map((group, index) => (
                             <React.Fragment key={index}>
                                 {
-                                    group.products.map((product: ProductType) => <ProductCard key={product.id} product={product} />)
+                                    group.products.map((product: Product) => <ProductCard key={product.id} product={product} />)
                                 }
                             </React.Fragment>
                         ))

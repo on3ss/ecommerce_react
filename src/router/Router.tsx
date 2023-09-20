@@ -4,6 +4,7 @@ import ErrorPage from "./RouterError";
 import Root from "./Root";
 import ProductsByCategory from "../pages/ProductsByCategory";
 import ProductsBySearch from "../pages/ProductsBySearch";
+import ProductDetail from "../pages/ProductDetail";
 
 const router = createBrowserRouter([
     {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
             {
                 path: 'search/:query',
                 element: <ProductsBySearch />
+            },
+            {
+                path: 'product/:id',
+                element: <ProductDetail />
             },
         ]
     }
