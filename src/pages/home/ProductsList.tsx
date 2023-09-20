@@ -27,8 +27,8 @@ const calculateDiscountedPrice = (price: number, percentage: number) => (price -
 
 const ProductCard = memo(({ product }: { product: ProductType }) => {
     return (
-        <a href="#">
-            <div className="rounded shadow-sm bg-gray-50">
+        <a href="#" className="">
+            <div className="min-h-full rounded shadow-sm bg-gray-50">
                 <div className="relative">
                     <img className="object-cover min-w-full rounded-t aspect-[4/3]" src={product.thumbnail} alt={product.title} loading="lazy" />
                     <div className="absolute p-1 text-xs text-gray-200 bg-purple-400 rounded top-2 right-2">
