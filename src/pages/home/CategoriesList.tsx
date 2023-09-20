@@ -2,19 +2,12 @@ import { useQuery } from "@tanstack/react-query"
 import Loader from "../components/Loader"
 
 export default function CategoriesList() {
-    const fetchCategories = async () => {
+    const fetchCategories = async (): Promise<string[]> => {
         const response = await fetch('https://dummyjson.com/products/categories')
-        return await response.json()
+        const data: Promise<string[]> = await response.json()
+        return data
     }
     const { data, error, isLoading } = useQuery({ queryKey: ['categories'], queryFn: fetchCategories })
-
-    if (error) {
-        return
-    }
-
-    if (isLoading) {
-
-    }
 
     return error ? (
         <p>Something went wrong! Could not fetch categories</p>
