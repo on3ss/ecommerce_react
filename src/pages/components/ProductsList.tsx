@@ -3,8 +3,7 @@ import Loader from "./Loader";
 import React, { memo } from "react";
 import { Products, Product } from "../../types/ProductType";
 import { Link } from "react-router-dom"
-
-const calculateDiscountedPrice = (price: number, percentage: number) => (price - (price * (percentage / 100))).toFixed(2)
+import calculateDiscountedPrice from "../../utils/price_util";
 
 const ProductCard = memo(({ product }: { product: Product }) => {
     return (

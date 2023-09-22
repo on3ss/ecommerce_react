@@ -5,10 +5,9 @@ import { Carousel } from "react-responsive-carousel"
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Product } from "../types/ProductType"
 import { useState } from "react";
+import calculateDiscountedPrice from "../utils/price_util";
 
-const calculateDiscountedPrice = (price: number, percentage: number) => (price - (price * (percentage / 100))).toFixed(2)
-
-export default function ProductDetail() {
+export default function ProductDetailPage() {
     const { id } = useParams()
     const [quantity, setQuantity] = useState(1)
 
