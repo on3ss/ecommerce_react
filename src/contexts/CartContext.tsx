@@ -1,6 +1,5 @@
 import React, { createContext, useReducer, useContext, ReactNode } from 'react';
-import { Cart } from '../types/CartType';
-import { Product } from '../types/ProductType';
+import { Cart, CartItemType } from '../types/CartType';
 
 // Define the initial cart state
 const initialCartState: Cart = {
@@ -22,8 +21,8 @@ const CartContext = createContext<{
 // Define cart actions
 type CartAction =
     | { type: 'SET_CART'; payload: Cart }
-    | { type: 'ADD_TO_CART'; payload: { product: Product; quantity: number } }
-    | { type: 'REMOVE_FROM_CART'; payload: { product: Product; quantity: number } }
+    | { type: 'ADD_TO_CART'; payload: { product: CartItemType; quantity: number } }
+    | { type: 'REMOVE_FROM_CART'; payload: { product: CartItemType; quantity: number } }
     | { type: 'CLEAR_CART' };
 
 // Define the cart reducer
@@ -34,13 +33,32 @@ function cartReducer(state: Cart, action: CartAction): Cart {
                 ...action.payload,
             };
         case 'ADD_TO_CART':
-            return {
-                ...state,
-                products: [...state.products, action.payload.product],
-                total: state.total + action.payload.product.price * action.payload.quantity,
-                totalProducts: state.totalProducts + 1,
-                totalQuantity: state.totalQuantity + action.payload.quantity,
-            };
+            const existingProductIndex = state.products.findIndex(
+                (product) => product.id === action.payload.product.id
+            );
+
+            if (existingProductIndex !== -1) {
+                // If the product exists, update its quantity
+                const updatedProducts = [...state.products];
+                const existingProduct = updatedProducts[existingProductIndex];
+                existingProduct.quantity += action.payload.quantity;
+
+                return {
+                    ...state,
+                    products: updatedProducts,
+                    total: state.total + action.payload.product.price * action.payload.quantity,
+                    totalQuantity: state.totalQuantity + action.payload.quantity,
+                };
+            } else {
+                // If the product is not in the cart, add it as a new item
+                return {
+                    ...state,
+                    products: [...state.products, { ...action.payload.product, quantity: action.payload.quantity }],
+                    total: state.total + action.payload.product.price * action.payload.quantity,
+                    totalProducts: state.totalProducts + 1,
+                    totalQuantity: state.totalQuantity + action.payload.quantity,
+                };
+            }
         case 'REMOVE_FROM_CART':
             const updatedProducts = state.products.filter(
                 (product) => product.id !== action.payload.product.id

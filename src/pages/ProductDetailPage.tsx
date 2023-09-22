@@ -6,10 +6,12 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Product } from "../types/ProductType"
 import { useState } from "react";
 import calculateDiscountedPrice from "../utils/price_util";
+import { useCart } from "../contexts/CartContext";
 
 export default function ProductDetailPage() {
     const { id } = useParams()
     const [quantity, setQuantity] = useState(1)
+    const { dispatch } = useCart()
 
     const fetchProduct = async (): Promise<Product> => {
         const response = await fetch(`https://dummyjson.com/products/${id}`)
@@ -30,6 +32,26 @@ export default function ProductDetailPage() {
             return
         }
         setQuantity(quantity - 1)
+    }
+
+    const addToCart = () => {
+        if (!data) {
+            return
+        }
+        dispatch({
+            type: 'ADD_TO_CART', payload: {
+                product: {
+                    id: data.id,
+                    title: data.title,
+                    price: data.price,
+                    quantity: quantity,
+                    total: data.price * quantity,
+                    discountPercentage: data.discountPercentage,
+                    discountedPrice: parseFloat(calculateDiscountedPrice(data.price, data.discountPercentage))
+                },
+                quantity: quantity
+            }
+        })
     }
 
     return isLoading ? (
@@ -72,7 +94,7 @@ export default function ProductDetailPage() {
                                         <button className="px-3 py-1 font-semibold text-white bg-purple-600 rounded" onClick={incrementQuantity} disabled={quantity >= data.stock}>&#43;</button>
                                     </div>
                                     <div className="mx-2 md:ml-0">
-                                        <button className="p-2 text-sm font-semibold text-gray-800 border-2 border-purple-600 rounded-lg focus:bg-purple-600 focus:text-white">Add To Cart</button>
+                                        <button className="p-2 text-sm font-semibold text-gray-800 border-2 border-purple-600 rounded-lg focus:bg-purple-600 focus:text-white" onClick={addToCart}>Add To Cart</button>
                                     </div>
                                 </div>
                             </div>
