@@ -9,9 +9,16 @@ function CartItem({ product }: { product: CartItemType }) {
 
     return (
         <div className="relative p-2 mx-2 my-4 bg-gray-50">
-            <Link to={`/product/${product.id}`}>
-                <h6>{product.title} <span>&times; {product.quantity}</span></h6>
-            </Link>
+            <div className="flex items-start justify-between gap-2">
+                <Link to={`/product/${product.id}`}>
+                    <h6>{product.title} <span>&times; {product.quantity}</span></h6>
+                </Link>
+                <div className="w-4 mr-2">
+                    <button className="px-2 text-xl text-red-600" onClick={() => {
+                        dispatch({ type: 'REMOVE_FROM_CART', payload: { product, quantity: 1 } });
+                    }}>&times;</button>
+                </div>
+            </div>
             <div className="text-sm font-semibold">
                 <span className="text-purple-600">${calculateDiscountedPrice(product.price, product.discountPercentage)}</span>
                 <span className="mx-2 line-through">${product.price}</span>
@@ -20,12 +27,6 @@ function CartItem({ product }: { product: CartItemType }) {
             <div className="flex items-center justify-between py-2 my-2 text-sm font-semibold border-t">
                 <span>Total</span>
                 <span className="text-purple-600">${product.discountedPrice}</span>
-            </div>
-
-            <div className="absolute top-1 right-1">
-                <button className="px-2" onClick={() => {
-                    dispatch({ type: 'REMOVE_FROM_CART', payload: { product, quantity: 1 } });
-                }}>&times;</button>
             </div>
         </div>
     )
