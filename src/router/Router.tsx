@@ -1,16 +1,22 @@
 import { createBrowserRouter } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import ErrorPage from "./RouterError";
-import Root from "./Root";
+import AuthenticatedRoot from "./AuthenticatedRoot";
 import ProductsByCategoryPage from "../pages/ProductsByCategoryPage";
 import ProductsBySearchPage from "../pages/ProductsBySearchPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
 import CartPage from "../pages/CartPage";
+import LoginPage from "../pages/LoginPage";
+import { CartProvider } from "../contexts/CartContext";
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Root />,
+        element: (
+            <CartProvider>
+                <AuthenticatedRoot />
+            </CartProvider>
+        ),
         errorElement: <ErrorPage />,
         children: [
             {
@@ -34,6 +40,11 @@ const router = createBrowserRouter([
                 element: <CartPage />
             },
         ]
+    },
+    {
+        path: '/login',
+        element: <LoginPage />,
+        errorElement: <ErrorPage />
     }
 ])
 

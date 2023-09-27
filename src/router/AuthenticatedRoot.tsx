@@ -3,6 +3,7 @@ import CategoriesList from "../pages/components/CategoriesList";
 import React, { useEffect, useState } from "react";
 import CartWithBadgeIcon from "../pages/components/CartWithBadgeIcon";
 import { useCart } from "../contexts/CartContext";
+import { useAuth } from "../providers/AuthProvider";
 
 function SearchForm() {
     const [query, setQuery] = useState("")
@@ -27,10 +28,19 @@ function SearchForm() {
     )
 }
 
-export default function Root() {
-    const searchForm = SearchForm()
+export default function AuthenticatedRoot() {
+    const { user, logout } = useAuth()
+    const navigate = useNavigate()
 
+    const searchForm = SearchForm()
     const { dispatch } = useCart()
+
+    useEffect(() => {
+        if (!user) {
+            navigate('/login')
+        }
+    }, [user])
+
     useEffect(() => {
         fetch('https://dummyjson.com/carts/1')
             .then((response) => response.json())
@@ -54,6 +64,15 @@ export default function Root() {
                             {searchForm}
                         </div>
                         <CartWithBadgeIcon />
+                        <button className="p-2 text-red-600 rounded" onClick={() => {
+                            logout()
+                        }}>
+                            <div className="w-6 h-6">
+                                <svg fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15M9 12l3 3m0 0l3-3m-3 3V2.25" />
+                                </svg>
+                            </div>
+                        </button>
                     </div>
                 </div>
 
